@@ -1,0 +1,41 @@
+# Dependabot config, modeled on visitiq-monorepo/.github/dependabot.yml.
+# Security updates ignore schedule, cooldown and open-pull-requests-limit; they use the groups marked
+# `applies-to: security-updates`. Never add a target-branch: security updates would stop using this file.
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    # Supply-chain guard: skip versions younger than this (version updates only).
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "[VIQ-XX] "
+    labels:
+      - "dependencies"
+      - "javascript"
+    groups:
+      npm-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+      npm-minor-patch:
+        applies-to: "version-updates"
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+      npm-major:
+        applies-to: "version-updates"
+        group-by: "dependency-name"
+        update-types:
+          - "major"
+        patterns:
+          - "*"
